@@ -35,7 +35,7 @@
             .main {
                 margin-left: 15px;
                 margin-right: 15px;
-                margin-top: 5px;
+                margin-top: 15px;
                 background: white;
             }
             section{
@@ -134,8 +134,18 @@
             .custom-footer-page-number:after {
                 content: counter(page);
             }
+            .barcode-package{
+                font-family: 'Libre Barcode 39', cursive;
+                font-size: 16px;
+                float: center;
+            }
+            .barcode-header{
+                font-family: 'Libre Barcode 39', cursive;
+                font-size: 36px;
+            }
         </style>
         <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
     </head>
     <body>
         <page>
@@ -153,25 +163,38 @@
                         {% for obj in header_report %}
                         <div class="row ">
                             <div class="col-6" style="width: 50%; float: left;">
-                                <p>Delivery Date (วันที่ส่งสินค้า) : {{ obj.delivery_date }}</p>
+                                <p><b>Delivery Date (วันที่ส่งสินค้า) :</b> {{ obj.delivery_date | date:'d M Y' }}</p>
                             </div>
                             <div class="col-6" style="width: 50%; float: left;">
-                                <p>DN No. (เลขที่เอกสาร) :{{ obj.dn_no }} </p>
+                                <div class="barcode-header">
+                                    *{{ obj.dn_no }}*
+                                </div>
                             </div>
+                            
                         <div class="row ">
                             <div class="col-6" style="width: 50%; float: left;">
-                                <p>Truck No. / Truck Type: {{ obj.truck_no.truck_no }} / {{ obj.truck_no.truck_type  }}</p>
+                                <p><b>Truck No. / Truck Type :</b> {{ obj.truck_no.truck_no }} / {{ obj.truck_no.truck_type  }}</p>
                             </div> 
+                        </div>
+                        <div class="row ">
                             <div class="col-6" style="width: 50%; float: left;">
-                                <p>Promised Date (วันที่ต้องการ) : {{ obj.promised_date }} </p> 
+                                <p><b> DN No. (เลขที่เอกสาร) :</b> {{ obj.dn_no }}</p>
                             </div>
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p><b>Trip No. (เที่ยวที่) :</b> {{ obj.trip_no }}</p>
+                            </div>
+                        </div>
                         <div class="row ">
-                            <div class="col-6" style="width: 100%; float: left;">
-                                <p>Driver Name (ชื่อพนักงานขับรถ) : {{ obj.driver_name.name }} {{ obj.driver_name.surname }}</p>
-                            </div>                             
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p><b>Promised Date (วันที่ต้องการ) :</b> {{ obj.promised_date | date:'d M Y' }} </p>
+                            </div>
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p><b>Driver Name (ชื่อพนักงานขับรถ) :</b> {{ obj.driver_name.name }} {{ obj.driver_name.surname }}</p> 
+                            </div>  
+                        </div>                           
                         <div class="row ">
-                            <div class="col-6" style="width: 100%; float: left;">
-                                <p>Telephone (เบอร์โทรศัพท์) : {{ obj.driver_name.telephone }}</p>
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p><b>Telephone (เบอร์โทรศัพท์) :</b> {{ obj.driver_name.telephone }}</p>
                             </div> 
                         </div>
                         {%endfor%}  
@@ -183,16 +206,16 @@
                     <table>
                         <thead>
                             <tr>
-                                <td rowspan="2" style="width: 30px;">No.<br>(ลำดับที่)</td>
-                                <td rowspan="2"style="width: 70px;">Order No.<br>(เลขรายการสั่งซื้อ)</td>
-                                <td rowspan="2"style="width: 70px;">Package Code<br>(รหัสกล่อง)</td>
-                                <td rowspan="2"style="width: 80px;">Package Name<br>(ชื่อกล่อง)</td>
-                                <td colspan="2" style="width: 110px;">Quantity of Package<br>(จำนวนชิ้น)</td>    
-                                <td rowspan="2"style="width: 60px;">Remark<br>(หมายเหตุ)</td>
+                                <td rowspan="2" style="width: 25px;"><b>No.<br>(ลำดับที่)</b></td>
+                                <td rowspan="2"style="width: 45px;"><b>Order No.<br>(เลขที่ใบสั่งซื้อ)</b></td>
+                                <td rowspan="2"style="width: 75px;"><b>Barcode<br>Package Code<br>(บาร์โค้ดรหัสกล่อง)</b></td>
+                                <td rowspan="2"style="width: 60px;"><b>Package Code<br>(รหัสกล่อง)</b></td>                                
+                                <td colspan="2" style="width: 120px;"><b>Quantity of Package<br>(จำนวนสั่งซื้อ)</b></td>    
+                                <td rowspan="2"style="width: 50px;"><b>Remark<br>(หมายเหตุ)</b></td>
                             </tr>
                             <tr>                                
-                                <td>Order<br>(จำนวนสั่ง)</td>
-                                <td>Actual<br>(จำนวนจริง)</td>                                           
+                                <td><b>Order Qty.<br>(จำนวนสั่ง)</b></td>
+                                <td><b>Receive Qty.<br>(จำนวนรับ)</b></td>                                           
                             </tr> 
                         </thead>
                         <tbody>                
@@ -200,8 +223,12 @@
                             <tr style="height: 8mm;">                
                                 <td>{{ forloop.counter|add:start_index }}</td>
                                 <td>{{ obj.order_no }}</td>
-                                <td>{{ obj.package_no.package_no }}</td>
-                                <td>{{ obj.package_no.package_name }}</td>
+                                <td>
+                                    <div class="barcode-package">
+                                        *{{ obj.package_no.package_no }}*
+                                    </div>
+                                </td>
+                                <td>{{ obj.package_no.package_no }}</td>                                
                                 <td>{{ obj.order }}</td>
                                 <td>{{ obj.actual }}</td>
                                 <td>{{ obj.remark }}</td>

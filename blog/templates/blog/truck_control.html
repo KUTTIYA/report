@@ -96,26 +96,28 @@
                 {% for obj in header_report %}
                 <div class="row ">
                     <div class="col-6" style="width: 30%; float: left;">
-                        <p>Truck No. (ทะเบียนรถ) : {{ obj.truck_no.truck_no }}</p>
+                        <p><b>Truck No. (ทะเบียนรถ) :</b> {{ obj.truck_no.truck_no }}</p>
                     </div>
                     <div class="col-6" style="width: 45%; float: left;">
-                        <p>Truck Control No. (เลขที่ใบคุมรถ) : {{ obj.truck_control_no }}</p>
+                        <p><b>Truck Control No. (เลขที่ใบคุมรถ) :</b> {{ obj.truck_control_no }}</p>
                     </div>
+                </div>
                 <div class="row ">
                     <div class="col-6" style="width: 30%; float: left;">
-                        <p>Truck Type (ประเภทรถ) : {{ obj.truck_no.truck_type }}</p>
+                        <p><b>Truck Type (ประเภทรถ) :</b> {{ obj.truck_no.truck_type }}</p>
                     </div> 
                     <div class="col-6" style="width: 45%; float: left;">
-                        <p>Promised Date (วันที่ต้องการ) : {{ obj.promised_date }}</p> 
+                        <p><b>Promised Date (วันที่ต้องการ) :</b> {{ obj.promised_date | date:'d M Y'  }}</p> 
+                    </div>
                 </div>
                 <div class="row ">
                     <div class="col-6" style="width: 100%; float: left;">
-                        <p>Driver Name (ชื่อพนักงานขับรถ) : {{ obj.driver_name.name }} {{ obj.driver_name.surname }}</p>
+                        <p><b>Driver Name (ชื่อพนักงานขับรถ) :</b> {{ obj.driver_name.name }} {{ obj.driver_name.surname }}</p>
                     </div> 
                 </div>
                 <div class="row ">
                     <div class="col-6" style="width: 100%; float: left;">
-                        <p>Telephone (เบอร์โทรศัพท์) : {{ obj.driver_name.telephone }}</p>
+                        <p><b>Telephone (เบอร์โทรศัพท์) :</b> {{ obj.driver_name.telephone }}</p>
                     </div> 
                 </div>
                 {%endfor%} 
@@ -124,17 +126,17 @@
 
         <table>
             <tr>
-                <th style="width: 1.5%;">No.<br>(ลำดับที่)</th>
-                <th style="width: 3%;">Destination<br>(สถานที่จัดส่ง)</th>
-                <th style="width: 6%;">Delivery Date<br>(วันที่ส่งของ)</th>
-                <th style="width: 6%;">Delivery Note No.<br>(เลขที่ใบส่งของ)</th>
-                <th style="width: 10%;">Remark<br>(หมายเหตุ)</th>
+                <th style="width: 1.5%;"><b>No.<br>(ลำดับที่)</b></th>
+                <th style="width: 3%;"><b>Destination<br>(สถานที่จัดส่ง)</b></th>
+                <th style="width: 6%;"><b>Delivery Date<br>(วันที่ส่งของ)</b></th>
+                <th style="width: 6%;"><b>Delivery Note No.<br>(เลขที่ใบส่งของ)</b></th>
+                <th style="width: 10%;"><b>Remark<br>(หมายเหตุ)</b></th>
             </tr>
             {% for obj in list_report %}
             <tr style="height: 8mm;">                
                 <td>{{ forloop.counter|add:start_index }}</td>
                 <td>{{ obj.destination }}</td>
-                <td>{{ obj.delivery_date }}</td>
+                <td>{{ obj.delivery_date|date:'d M Y' }}</td>
                 <td>{{ obj.delivery_note_no.dn_no }}</td>
                 <td>{{ obj.remark }}</td>
             </tr>
