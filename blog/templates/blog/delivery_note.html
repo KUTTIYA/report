@@ -1,0 +1,452 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">       
+        <title>Delivery Note</title>
+
+        <style>
+            body {
+                background: white; 
+                padding-top: 300px;
+            }
+            @page {
+                background: white;
+                display: block;
+                margin: 0 auto;
+                margin-bottom: 0.5cm;
+                box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+                margin: 3cm 2cm;
+                @top-right {
+                color: gray;
+                font-size: 12px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                content: "Page " counter(page) " of " counter(pages); 
+                }
+            }
+        /* footer, header - position: fixed */
+            header {
+                position: fixed;
+                width: 100%;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+            .main {
+                margin-left: 15px;
+                margin-right: 15px;
+                margin-top: 5px;
+                background: white;
+            }
+            section{
+                margin-bottom: 10px;
+            }
+          
+            footer {
+                position: fixed;
+                bottom: -2.5cm;
+                width: 100%;
+                text-align: center;
+                font-size: 10pt;
+            }
+            page[size="A4"] {  
+                width: 21cm;
+                height: 29.7cm; 
+                margin: -20mm -16mm -27mm -16mm;
+            }
+            page[size="TABLE"] {
+                width: 21cm;
+                height: 10cm; 
+                margin-top: 10cm;
+            }
+            @media print {
+                body, page {
+                    margin: 0;
+           
+                }
+            }
+            .logo {
+                float: left;
+                margin-top: 40px;
+                margin-left: 40px;
+            }           
+            .title{
+                float: right;
+                margin-top: 40px;  
+                margin-right: 10px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                font-size: 30px;
+            }
+            .detail{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: left;
+                font-size: 10px;
+                
+            }
+            table{
+                width: 100%;                
+                border-collapse: collapse;
+                border: 1px solid #ddd;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                table-layout: fixed;
+                word-wrap: break-word;         /* All browsers since IE 5.5+ */
+                overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+            }
+            th, td{
+                text-align: center;
+                padding: 15px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;         /* All browsers since IE 5.5+ */
+                overflow-wrap: break-word;
+                font-size: 8px;
+                border: 1px solid #ddd;
+                display: table-cell;
+            }
+            tr{
+                border: 1px solid #ddd;
+                display: table-row;
+                page-break-inside:avoid; page-break-after:auto;
+                line-height: 12px;
+                height: 8mm;
+            }               
+            .authorized{
+                margin-left: 40px;
+                margin-right: 40px;
+                margin-top: 40px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: center;
+                font-size: 10px;              
+                margin-block-start: 10%;
+                margin-bottom: 40%;
+            }
+            thead{
+                
+                display: table-header-group;
+            }
+            tbody{
+                max-height: 300px;
+                display: table-row-group;
+            }
+            .custom-page-start {
+                margin-top: 10px;
+                page-break-after:always; 
+            }
+            .custom-footer-page-number:after {
+                content: counter(page);
+            }
+        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <page>
+            <header>
+                <div class="container-fluid" style="height: 150px;">     
+                    <div class="logo">
+                        <img src="https://uppic.cc/d/yPYF" style="width: 120px;">
+                    </div>            
+                    <div class="title">
+                        <b>Delivery Note (DN)</b>
+                    </div>
+                </div>
+                <detail class="detail">
+                    <div class="container" style="margin-left: 20px">
+                        <div class="row ">
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p>Delivery Date (วันที่ส่งสินค้า) : {{ obj.Delivery_date }}</p>
+                            </div>
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p>DN No. (เลขที่เอกสาร) :{{ obj.dn_no }} </p>
+                            </div>
+                        <div class="row ">
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p>Truck No./Truck Type: {{ obj.truck_no }} </p>
+                            </div> 
+                            <div class="col-6" style="width: 50%; float: left;">
+                                <p>Promised Date (วันที่ต้องการ) : {{ promised_date }} </p> 
+                        </div>
+                        <div class="row ">
+                            <div class="col-6" style="width: 100%; float: left;">
+                                <p>Driver Name (ชื่อพนักงานขับรถ) : {{ driver_name }} </p>
+                            </div> 
+                        </div>
+                        <div class="row ">
+                            <div class="col-6" style="width: 100%; float: left;">
+                                <p>Telephone (เบอร์โทรศัพท์) : {{ Telephone }}</p>
+                            </div> 
+                        </div>
+                    </div>                  
+                </detail>
+            </header>
+            <div class="main">
+                <section>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td rowspan="2" style="width: 30px;">No.<br>(ลำดับที่)</td>
+                                <td rowspan="2"style="width: 70px;">Order No.<br>(เลขรายการสั่งซื้อ)</td>
+                                <td rowspan="2"style="width: 70px;">Package Code<br>(รหัสกล่อง)</td>
+                                <td rowspan="2"style="width: 80px;">Package Name<br>(ชื่อกล่อง)</td>
+                                <td colspan="2" style="width: 110px;">Quantity of Package<br>(จำนวนชิ้น)</td>    
+                                <td rowspan="2"style="width: 60px;">Remark<br>(หมายเหตุ)</td>
+                            </tr>
+                            <tr>                                
+                                <td>Order<br>(จำนวนสั่ง)</td>
+                                <td>Actual<br>(จำนวนจริง)</td>                                           
+                            </tr> 
+                        </thead>
+                        <tbody>                
+                            <tr>
+                            {% for obj in dn_list %}
+                                <tr style="height: 8mm;">                
+                                <td>{{ forloop.counter|add:start_index }}</td>
+                                <td>{{ obj.order_no }}</td>
+                                <td>{{ obj.package_code }}</td>
+                                <td>{{ obj.package_name }}</td>
+                                <td>{{ obj.order }}</td>
+                                <td>{{ obj.actual }}</td>
+                                <td>{{ obj.remark }}</td>
+                            </tr>
+                            {%endfor%}  
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            
+                                                   
+                        </tbody>
+                    </table>
+                <section>            
+            </div>
+            <footer>
+                <div class="authorized">
+                    <div class="container">
+                        <div class="row 100%">
+                            <div class="col-sm" style="float: left; width: 15%;">
+                                ลงรายมือชื่อ-ผู้ส่ง
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>                        
+                               ผู้จัดส่งสินค้า (KOH)
+                            </div>
+                            <div class="col-sm" style="float: left; width: 70%;" >              
+                                ลงรายมือชื่อ-ขนส่ง
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                               ผู้นำส่งสินค้า (พนักงานขับรถ)                    
+                            </div>
+                            <div class="col-sm" style="float: right;">                   
+                                ลงรายมือชื่อ-ผู้รับ
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br> 
+                                ผู็รับสินค้า (LAT)                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </page>
+    </body>
+</html>
