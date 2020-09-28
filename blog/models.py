@@ -78,7 +78,7 @@ class dn_list_report(models.Model):
 class dn_header_report(models.Model):
     dn_no = models.CharField(max_length=5)
     truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
-    name = models.ForeignKey(employee, on_delete=models.CASCADE)
+    driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
     promised_date =  models.DateField(verbose_name='Promised Date')
     dn_list = models.ManyToManyField(dn_list_report)
 
