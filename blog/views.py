@@ -85,12 +85,13 @@ def delivery_note_pdf(request):
     all_page_no = math.ceil(all_count/page)
 
     """Generate pdf."""
+    header_report = dn_header_report.objects.filter(dn_no='5')
     list_pdf = []
     for i in range(0, all_page_no):
         query_max = (i+1)*page
         if query_max > all_count:
             query_max = all_count
-        header_report = dn_header_report.objects.filter()
+        
         list_report = dn_list_report.objects.all().order_by('list_no')[(i*page):query_max]
         html_string = render_to_string('blog/delivery_note.html', {'header_report': header_report, 'list_report': list_report, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
         pdf = HTML(string=html_string)

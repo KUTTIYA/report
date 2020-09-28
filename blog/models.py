@@ -68,7 +68,6 @@ class dn_list_report(models.Model):
     list_no = models.CharField(verbose_name='No.',max_length=5)
     order_no = models.CharField(verbose_name='Order No.', max_length=5)
     package_no = models.ForeignKey(master_package,verbose_name='Package Code', on_delete=models.CASCADE)
-    package_name = models.ForeignKey(master_package,verbose_name='Package Name', on_delete=models.CASCADE)
     order = models.IntegerField(verbose_name='Order')
     actual = models.IntegerField(verbose_name='Actual')
     remark = models.TextField(verbose_name='Remark', max_length=200)
@@ -78,10 +77,11 @@ class dn_list_report(models.Model):
 
 class dn_header_report(models.Model):
     dn_no = models.CharField(max_length=5)
-    delivery_date = models.DateField(verbose_name='Delivery Date')
-    driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
+    truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
+    name = models.ForeignKey(employee, on_delete=models.CASCADE)
     promised_date =  models.DateField(verbose_name='Promised Date')
     dn_list = models.ManyToManyField(dn_list_report)
+
     def __str__(self):
 		    return self.dn_no
 
