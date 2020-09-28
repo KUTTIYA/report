@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # -*- coding: utf-8 -*-
-from .models import truck_header_report, truck_list_report,truck,truck_type,employee,delivery_note, dn_header, dn_list, master_package
+from .models import truck_header_report, truck_list_report,truck,truck_type,employee,delivery_note, master_package, dn_list_report, dn_header_report
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from weasyprint import HTML
@@ -82,7 +82,7 @@ def index_pdf(request):
 def delivery_note_pdf(request):
     page = 10
 
-    all_count = dn_list.objects.count()
+    all_count = dn_list_report.objects.count()
     all_page_no = math.ceil(all_count/page)
 
     """Generate pdf."""
@@ -91,9 +91,8 @@ def delivery_note_pdf(request):
         query_max = (i+1)*page
         if query_max > all_count:
             query_max = all_count
-        
-        dn_list = dn_list.objects.all().order_by('list_no')[(i*page):query_max]
-        html_string = render_to_string('blog/delivery_note.html', {'dn_list': dn_list, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
+        dn_list_report = dn_list_report.objects.all().order_by('list_no')[(i*page):query_max]
+        html_string = render_to_string('blog/delivery_note.html', {'dn_list_report': dn_list_report, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
         pdf = HTML(string=html_string)
         list_pdf.append(pdf)
     
