@@ -23,7 +23,6 @@ def truck_control_pdf(request):
     all_count = truck_list_report.objects.count()
     all_page_no = math.ceil(all_count/page)
 
-
     """Generate pdf."""
     list_pdf = []
     for i in range(0, all_page_no):
@@ -80,7 +79,7 @@ def index_pdf(request):
     return response
 
 def delivery_note_pdf(request):
-    page = 10
+    page = 5
 
     all_count = dn_list_report.objects.count()
     all_page_no = math.ceil(all_count/page)
@@ -91,8 +90,9 @@ def delivery_note_pdf(request):
         query_max = (i+1)*page
         if query_max > all_count:
             query_max = all_count
-        dn_list_report = dn_list_report.objects.all().order_by('list_no')[(i*page):query_max]
-        html_string = render_to_string('blog/delivery_note.html', {'dn_list_report': dn_list_report, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
+        header_report = dn_header_report.objects.filter()
+        list_report = dn_list_report.objects.all().order_by('list_no')[(i*page):query_max]
+        html_string = render_to_string('blog/delivery_note.html', {'header_report': header_report, 'list_report': list_report, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
         pdf = HTML(string=html_string)
         list_pdf.append(pdf)
     
@@ -114,7 +114,7 @@ def delivery_note_pdf(request):
     pdf_file = pdf_data.copy(val).write_pdf() # use metadata of pdf_first
 
     http_response = HttpResponse(pdf_file, content_type='application/pdf')
-    http_response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    http_response['Content-Disposition'] = 'attachment; filename="deliver_note_report.pdf"'
 
     return http_response
 

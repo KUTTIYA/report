@@ -65,15 +65,16 @@ class master_package(models.Model):
 		    return self.package_name
 
 class dn_list_report(models.Model):
-    list_no = models.IntegerField(verbose_name='No.')
+    list_no = models.CharField(verbose_name='No.',max_length=5)
     order_no = models.CharField(verbose_name='Order No.', max_length=5)
     package_no = models.ForeignKey(master_package,verbose_name='Package Code', on_delete=models.CASCADE)
+    package_name = models.ForeignKey(master_package,verbose_name='Package Name', on_delete=models.CASCADE)
     order = models.IntegerField(verbose_name='Order')
     actual = models.IntegerField(verbose_name='Actual')
     remark = models.TextField(verbose_name='Remark', max_length=200)
 
     def __str__(self):
-		    return str (self.list_no)
+		    return self.list_no
 
 class dn_header_report(models.Model):
     dn_no = models.CharField(max_length=5)
