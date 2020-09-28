@@ -160,18 +160,18 @@
                             </div>
                         <div class="row ">
                             <div class="col-6" style="width: 50%; float: left;">
-                                <p>Truck No. / Truck Type: {{ obj.truck_no.truck_no }} / {{ obj.truck_type.truck_type }}</p>
+                                <p>Truck No. / Truck Type: {{ obj.truck_no.truck_no }} / {{ obj.truck_no.truck_type  }}</p>
                             </div> 
                             <div class="col-6" style="width: 50%; float: left;">
                                 <p>Promised Date (วันที่ต้องการ) : {{ obj.promised_date }} </p> 
                             </div>
                         <div class="row ">
                             <div class="col-6" style="width: 100%; float: left;">
-                                <p>Driver Name (ชื่อพนักงานขับรถ) : {{ obj.name.name }} </p>
+                                <p>Driver Name (ชื่อพนักงานขับรถ) : {{ obj.driver_name.name }} {{ obj.driver_name.surname }}</p>
                             </div>                             
                         <div class="row ">
                             <div class="col-6" style="width: 100%; float: left;">
-                                <p>Telephone (เบอร์โทรศัพท์) : {{ obj.telephone.telephone }}</p>
+                                <p>Telephone (เบอร์โทรศัพท์) : {{ obj.driver_name.telephone }}</p>
                             </div> 
                         </div>
                         {%endfor%}  

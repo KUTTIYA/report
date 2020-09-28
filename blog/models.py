@@ -50,8 +50,9 @@ class truck_list_report(models.Model):
 class truck_header_report(models.Model):
     truck_control_no = models.CharField(verbose_name='Truck Control No.', max_length=5)
     truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
-    name = models.ForeignKey(employee, on_delete=models.CASCADE)
-    promised_date = models.DateField()
+   
+    driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
+    promised_date = models.DateField(verbose_name='Promised Date')
     list_id = models.ForeignKey(truck_list_report, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -77,10 +78,13 @@ class dn_list_report(models.Model):
 
 class dn_header_report(models.Model):
     dn_no = models.CharField(max_length=5)
+    delivery_date = models.DateField(verbose_name='Delivery Date')
     truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
+    
     driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
     promised_date =  models.DateField(verbose_name='Promised Date')
     dn_list = models.ManyToManyField(dn_list_report)
+
 
     def __str__(self):
 		    return self.dn_no

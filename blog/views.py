@@ -29,7 +29,7 @@ def truck_control_pdf(request):
         query_max = (i+1)*page
         if query_max > all_count:
             query_max = all_count
-        header_report = truck_header_report.objects.filter(truck_control_no= '12')
+        header_report = truck_header_report.objects.filter(truck_control_no= '1234')
         list_report = truck_list_report.objects.all().order_by('list_no')[(i*page):query_max]
         html_string = render_to_string('blog/truck_control.html', {'header_report':header_report, 'list_report': list_report, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
         pdf = HTML(string=html_string)
@@ -53,7 +53,7 @@ def truck_control_pdf(request):
     pdf_file = pdf_data.copy(val).write_pdf() # use metadata of pdf_first
 
     http_response = HttpResponse(pdf_file, content_type='application/pdf')
-    http_response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    http_response['Content-Disposition'] = 'attachment; filename="truck_control.pdf"'
 
     return http_response
 
@@ -85,13 +85,13 @@ def delivery_note_pdf(request):
     all_page_no = math.ceil(all_count/page)
 
     """Generate pdf."""
-    header_report = dn_header_report.objects.filter(dn_no='5')
+    
     list_pdf = []
     for i in range(0, all_page_no):
         query_max = (i+1)*page
         if query_max > all_count:
             query_max = all_count
-        
+        header_report = dn_header_report.objects.filter(dn_no='1234')
         list_report = dn_list_report.objects.all().order_by('list_no')[(i*page):query_max]
         html_string = render_to_string('blog/delivery_note.html', {'header_report': header_report, 'list_report': list_report, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
         pdf = HTML(string=html_string)

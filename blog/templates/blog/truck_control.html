@@ -93,30 +93,32 @@
         <hr class="featurette-divider" style="margin-top: 5%;">
         <detail class="detail">
             <div class="container" style="margin-left: 10px">
+                {% for obj in header_report %}
                 <div class="row ">
                     <div class="col-6" style="width: 30%; float: left;">
-                        <p>Truck No. (ทะเบียนรถ) : {{ obj.truck_no }}</p>
+                        <p>Truck No. (ทะเบียนรถ) : {{ obj.truck_no.truck_no }}</p>
                     </div>
                     <div class="col-6" style="width: 45%; float: left;">
                         <p>Truck Control No. (เลขที่ใบคุมรถ) : {{ obj.truck_control_no }}</p>
                     </div>
                 <div class="row ">
                     <div class="col-6" style="width: 30%; float: left;">
-                        <p>Truck Type (ประเภทรถ) : {{ obj.truck_type }}</p>
+                        <p>Truck Type (ประเภทรถ) : {{ obj.truck_no.truck_type }}</p>
                     </div> 
                     <div class="col-6" style="width: 45%; float: left;">
                         <p>Promised Date (วันที่ต้องการ) : {{ obj.promised_date }}</p> 
                 </div>
                 <div class="row ">
                     <div class="col-6" style="width: 100%; float: left;">
-                        <p>Driver Name (ชื่อพนักงานขับรถ) : {{ obj.name }}</p>
+                        <p>Driver Name (ชื่อพนักงานขับรถ) : {{ obj.driver_name.name }} {{ obj.driver_name.surname }}</p>
                     </div> 
                 </div>
                 <div class="row ">
                     <div class="col-6" style="width: 100%; float: left;">
-                        <p>Telephone (เบอร์โทรศัพท์) : {{ obj.telephone }}</p>
+                        <p>Telephone (เบอร์โทรศัพท์) : {{ obj.driver_name.telephone }}</p>
                     </div> 
                 </div>
+                {%endfor%} 
             </div>                  
         </detail>
 
