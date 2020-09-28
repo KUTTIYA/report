@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # -*- coding: utf-8 -*-
-from .models import truck_header_report, truck_list_report,truck,truck_type,employee,delivery_note, master_package, dn_list_report, dn_header_report
+from .models import truck_header_report, truck_list_report,truck,truck_type,employee,master_package, dn_list_report, dn_header_report
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from weasyprint import HTML

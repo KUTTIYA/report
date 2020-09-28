@@ -31,33 +31,6 @@ class truck(models.Model):
     def __str__(self):
 		    return self.truck_no
 
-class delivery_note(models.Model):
-    no = models.CharField(verbose_name='Delivery Note no.',max_length=10)
-    
-    def __str__(self):
-		    return self.no
-
-class truck_list_report(models.Model):
-    list_no = models.CharField(verbose_name='No.', max_length=5)
-    delivery_note_no = models.ForeignKey(delivery_note, on_delete=models.CASCADE)
-    remark = models.TextField(verbose_name='Remark', null=True)
-    destination = models.CharField(verbose_name='Destination',max_length=200)
-    delivery_date = models.DateField(verbose_name='Delivery Date',max_length=200)
-    
-    def __str__(self):
-		    return self.list_no
-
-class truck_header_report(models.Model):
-    truck_control_no = models.CharField(verbose_name='Truck Control No.', max_length=5)
-    truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
-   
-    driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
-    promised_date = models.DateField(verbose_name='Promised Date')
-    list_id = models.ForeignKey(truck_list_report, on_delete=models.CASCADE)
-
-    def __str__(self):
-		    return self.truck_control_no
-
 class master_package(models.Model):
     package_no = models.CharField(max_length=10)
     package_name = models.CharField(max_length=50)
@@ -80,14 +53,33 @@ class dn_header_report(models.Model):
     dn_no = models.CharField(max_length=5)
     delivery_date = models.DateField(verbose_name='Delivery Date')
     truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
-    
     driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
     promised_date =  models.DateField(verbose_name='Promised Date')
     dn_list = models.ManyToManyField(dn_list_report)
 
-
     def __str__(self):
 		    return self.dn_no
+
+class truck_list_report(models.Model):
+    list_no = models.CharField(verbose_name='No.', max_length=5)
+    delivery_note_no = models.ForeignKey(dn_header_report, verbose_name='Delivery Note no.' , on_delete=models.CASCADE)
+    remark = models.TextField(verbose_name='Remark', null=True)
+    destination = models.CharField(verbose_name='Destination',max_length=200)
+    delivery_date = models.DateField(verbose_name='Delivery Date',max_length=200)
+    
+    def __str__(self):
+		    return self.list_no
+
+class truck_header_report(models.Model):
+    truck_control_no = models.CharField(verbose_name='Truck Control No.', max_length=5)
+    truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
+    
+    driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
+    promised_date = models.DateField(verbose_name='Promised Date')
+    list_id = models.ForeignKey(truck_list_report, on_delete=models.CASCADE)
+
+    def __str__(self):
+		    return self.truck_control_no
 
 
 
