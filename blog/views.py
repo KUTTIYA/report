@@ -1,9 +1,13 @@
 from django.shortcuts import render
 # -*- coding: utf-8 -*-
-from .models import truck_header_report, truck_list_report,truck,truck_type,employee,master_package, dn_list_report, dn_header_report
+from .models import department, employee, truck_type, truck, truck_list_report, truck_header_report
+from .models import master_package, dn_list_report, dn_header_report
+from .models import po_header_report, supplier, replacement_list_report, replacement_header_report
 from django.http import HttpResponse
+
 from django.template.loader import render_to_string
 from weasyprint import HTML
+from mysite.utils import render_to_pdf #created in step 4
 
 import math
 import tempfile
@@ -16,6 +20,9 @@ def truck_control(request):
 
 def delivery_note(request):
     return render(request, 'blog/delivery_note.html', {})
+
+def replacement_order(request):
+    return render(request, 'blog/replacement_order.html', {})
 
 def truck_control_pdf(request):
     page = 10
@@ -119,3 +126,43 @@ def delivery_note_pdf(request):
 
     return http_response
 
+def replacement_order_pdf(request):
+    page = 8
+
+    all_count = replacement_list_report.objects.count()
+    all_page_no = math.ceil(all_count/page)
+
+    """Generate pdf."""
+    
+    list_pdf = []
+    for i in range(0, all_page_no):
+        query_max = (i+1)*page
+        if query_max > all_count:
+            query_max = all_count
+        header_report = replacement_header_report.objects.filter(replacement_no='RN-202009-001')
+        list_report = replacement_list_report.objects.all().order_by('list_no')[(i*page):query_max]
+        html_string = render_to_string('blog/replacement_order.html', {'header_report': header_report, 'list_report': list_report, 'start_index': (i*page), 'page_no': (i+1), 'all_page_no': all_page_no})
+        pdf = HTML(string=html_string)
+        list_pdf.append(pdf)
+    
+    lid_render = []
+    val = []
+    boo_first = True
+    pdf_data = None
+
+    for pdf in list_pdf:
+        if boo_first:
+            boo_first = False
+            pdf_data = pdf.render()
+        lid_render.append(pdf.render())
+
+    for doc in lid_render:
+        for p in doc.pages:
+            val.append(p)
+
+    pdf_file = pdf_data.copy(val).write_pdf() # use metadata of pdf_first
+
+    http_response = HttpResponse(pdf_file, content_type='application/pdf')
+    http_response['Content-Disposition'] = 'attachment; filename="replacement_order_report.pdf"'
+
+    return http_response

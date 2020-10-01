@@ -3,66 +3,44 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">       
-        <title>Truck Control</title>
+        <title>Replacement Order Number</title>
 
         <style>
             body {
-                background: gray; 
-                padding-top: 300px;
+                background: white; 
+                height: 21cm;
+                width: 29.7cm;                
+                position: fixed;                
             }
-            @page {
-                background: white;
-                display: block;
-                margin: 0 auto;
-                margin-bottom: 0.5cm;
-                box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-                margin: 3cm 2cm;
-                @top-right {
-                color: gray;
-                font-size: 12px;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                content: "Page " counter(page) " of " counter(pages); 
-                }
-            }
+           
         /* footer, header - position: fixed */
             header {
-                position: fixed;
-                width: 100%;
-                top: 0;
-                left: 0;
-                right: 0;
+                width: 100%;                
             }
             .main {
                 margin-left: 15px;
                 margin-right: 15px;
-                margin-top: 30px;
+                margin-top: 100px;
                 background: white;
             }
-            section{
-                margin-bottom: 10px;
-            }
-          
             footer {
                 position: fixed;
-                bottom: -2.5cm;
+                bottom: 1cm;
                 width: 100%;
                 text-align: center;
                 font-size: 10pt;
             }
-            page[size="A4"] {  
-                width: 21cm;
-                height: 29.7cm; 
-                margin: -20mm -16mm -27mm -16mm;
-            }
-            page[size="TABLE"] {
-                width: 21cm;
-                height: 10cm; 
-                margin-top: 10cm;
-            }
+            page[size="A4" landscape] {  
+                position: fixed; 
+                height: 21cm;
+                width: 29.7cm;  
+            }            
             @media print {
-                body, page {
-                    margin: 0;
-           
+                 body, page {
+                 size: landscape;
+                 transform: rotate(270deg);
+                 top: 2cm;
+                 left: -6cm;
                 }
             }
             .logo {
@@ -71,16 +49,19 @@
                 margin-left: 40px;
             }           
             .title{
+                
                 float: right;
-                margin-top: 40px;  
-                margin-right: 40px;
+                margin-top: 60px;  
+                margin-right: 100px;
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                font-size: 30px;
+                font-size: 22px;
             }
             .detail{
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 text-align: left;
                 font-size: 12px;
+                margin-left: 20px;
+                
             }
             table{
                 width: 100%;                
@@ -97,7 +78,7 @@
                 border: 1px solid #ddd;
                 word-wrap: break-word;         /* All browsers since IE 5.5+ */
                 overflow-wrap: break-word;
-                font-size: 12px;
+                font-size: 10px;
                 border: 1px solid #ddd;
                 display: table-cell;
             }
@@ -105,117 +86,131 @@
                 border: 1px solid #ddd;
                 display: table-row;
                 page-break-inside:avoid; page-break-after:auto;
-                line-height: 20px;
+                line-height: 12px;
                 height: 8mm;
             }               
             .authorized{
-                margin-left: 40px;
-                margin-right: 40px;
+                margin-left: 30px;
+                margin-right: 10px;
                 margin-top: 40px;
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 text-align: center;
-                font-size: 10px;              
+                font-size: 12px;
+                
                 margin-block-start: 10%;
                 margin-bottom: 40%;
             }
             thead{
-                
                 display: table-header-group;
             }
             tbody{
                 max-height: 300px;
                 display: table-row-group;
             }
-            .custom-page-start {
-                margin-top: 10px;
-                page-break-after:always; 
+            
+            .barcode-package{
+                font-family: 'Libre Barcode 39', cursive;
+                font-size: 14px;
+                float: center;
             }
-            .custom-footer-page-number:after {
-                content: counter(page);
+            .barcode-header{
+                font-family: 'Libre Barcode 39', cursive;
+                font-size: 42px;
             }
         </style>
         <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
     </head>
     <body>
-        <page>
-            <header>
-                <div class="container-fluid" style="height: 150px;">     
+        <page><header>        
+                <div id='header' class="container-fluid" style="height: 150px;">     
                     <div class="logo">
                         <img src="https://uppic.cc/d/yPYF" style="width: 120px;">
                     </div>            
                     <div class="title">
-                        <b>Truck Control</b>
+                        <b>REPLACEMENT ORDER NUMBER</b>
                     </div>
                 </div>
                 <detail class="detail">
-                    <div class="container" style="margin-left: 10px">
-                        <div class="row ">
-                            <div class="col-6" style="width: 50%; float: left;">
-                                <p>Truck No. (ทะเบียนรถ) : {{ truck_no }}</p>
+                    <div class="container" style="margin-left: 20px; width:130%;">
+                        
+                        <div class="row 100%">
+                            <div class="col-6" style="width: 40%; float: left;">
+                                <p><b>Replacement Date (วันที่ส่งของทดแทน) :</b> </p>
                             </div>
-                            <div class="col-6" style="width: 50%; float: left;">
-                                <p>Truck Control No. (เลขที่ใบคุมรถ) :{{truckcontrolno}}</p>
-                            </div>
-                        <div class="row ">
-                            <div class="col-6" style="width: 50%; float: left;">
-                                <p>Truck Type (ประเภทรถ) : {{ truck_type }}</p>
-                            </div> 
-                            <div class="col-6" style="width: 50%; float: left;">
-                                <p>Promised Date (วันที่ต้องการ) : {{ promised_date }}</p> 
-                        </div>
-                        <div class="row ">
-                            <div class="col-6" style="width: 100%; float: left;">
-                                <p>Driver Name (ชื่อพนักงานขับรถ) : {{ driver_name }}</p>
+                            <div class="col-6" style="width: 40%; float: left;">
+                                <div class="barcode-header">
+                                    RN-202009-001
+                                </div>
+                            </div>                            
+                        <div class="row ">                           
+                            <div class="col-6" style="width: 60%; float: right;">
+                                <p><b>Replacement No. (เลขที่เอกสาร) :</b> </p>
                             </div> 
                         </div>
-                        <div class="row ">
-                            <div class="col-6" style="width: 100%; float: left;">
-                                <p>Telephone (เบอร์โทรศัพท์) : {{ telephone }}</p>
-                            </div> 
-                        </div>
+                          
                     </div>                  
                 </detail>
-            </header>
+            </header>  
             <div class="main">
-                <section>
+               
                     <table>
                         <thead>
-                            <td style="width: 20px;">No.<br>(ลำดับที่)</td>
-                            <td style="width: 50px;">Destination<br>(สถานที่จัดส่ง)</td>
-                            <td style="width: 50px;">Delivery Date<br>(วันที่ส่งของ)</td>
-                            <td style="width: 80px;">Delivery Note No.<br>(เลขที่ใบส่งของ)</td>
-                            <td style="width: 100px;">Remark<br>(หมายเหตุ)</td>
+                            <tr>
+                                <td rowspan="2" style="width: 35px;"><b>No.<br>(ลำดับที่)</b></td>
+                                <td rowspan="2"style="width: 80px;"><b>Ref DN No.<br>(อ้างอิงใบส่งของเลขที่)</b></td>
+                                <td rowspan="2"style="width: 75px;"><b>MST PO No.<br>(เลขที่ใบสั่งซื้อ)</b></td>
+                                <td rowspan="2"style="width: 70px;"><b>Supplier Code<br>(รหัสซัพพลายเออร์)</b></td>                                
+                                <td rowspan="2" style="width: 65px;"><b>Package Code<br>(รหัสกล่อง)</b></td>
+                                <td rowspan="2"style="width: 65px;"><b>Package Name<br>(ชื่อกล่อง)</b></td>                                
+                                <td colspan="2" style="width: 200px;"><b>Replacement QTY<br>(จำนวนชิ้นทดแทน)</b></td>     
+                                <td rowspan="2"style="width: 80px;"><b>Remark<br>(หมายเหตุ)</b></td>
+                            </tr>
+                            <tr>                                                                
+                                <td><b>Replacement Qty.<br>(จำนวนทดแทน)</b></td>
+                                <td><b>Receive Qty.<br>(จำนวนรับ)</b></td>                                           
+                            </tr> 
                         </thead>
                         <tbody>                
-                            <tr>
+                            
+                            <tr style="height: 8mm;">                
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -223,126 +218,229 @@
                                 <td></td>
                             </tr>
 
-                            <tr>
+                            <tr style="height: 8mm;">                
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr><tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr><tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr style="height: 8mm;">                
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>                           
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr><tr style="height: 8mm;">                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                                                    
                         </tbody>
                     </table>
-                <section>            
+                          
             </div>
             <footer>
                 <div class="authorized">
-                    <div class="container">
+                    <div class="container-fluid" style="width:150%;">
                         <div class="row 100%">
-                            <div class="col-sm" style="float: left; width: 25%;">
-                                Printed by (จัดทำโดย)
+                            <div class="col-md" style="float: left; width: 300px;">
+                                ลงรายมือชื่อ-ผู้ส่ง
                                 <br>
                                 <br>
                                 <br>
@@ -350,10 +448,10 @@
                                 <br>
                                 <br>
                                 <br>                        
-                                Customer Service<br>(เจ้าหน้าที่ประสานงานลูกค้า)
+                              Truck Controller (KOCH)<br>พนักงานควบคุมรถ
                             </div>
-                            <div class="col-sm" style="float: left; width: 45%;" >              
-                                Checked by(ตรวจสอบโดย)
+                            <div class="col-md" style="float: left; width: 400px;" >              
+                                ลงรายมือชื่อ-ขนส่ง
                                 <br>
                                 <br>
                                 <br>
@@ -361,10 +459,10 @@
                                 <br>
                                 <br>
                                 <br>
-                                Warehouse Supervsior<br>(หัวหน้างานคลังสินค้า)                    
+                                Driver (พนักงานขับรถ)<br>(ผู้นำส่งสินค้า)                  
                             </div>
-                            <div class="col-sm" style="float: right;">                   
-                                Part Receiving by (รับสินค้าโดย)
+                            <div class="col-md" style="float: right; width: 100px;" >                   
+                                ลงรายมือชื่อ-ผู้รับ
                                 <br>
                                 <br>
                                 <br>
@@ -372,7 +470,7 @@
                                 <br>
                                 <br>
                                 <br> 
-                                Truck Driver<br>(พนักงานขับรถ)                    
+                                 LAT<br>(ผู้รับสินค้า)                    
                             </div>
                         </div>
                     </div>

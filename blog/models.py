@@ -72,17 +72,49 @@ class truck_list_report(models.Model):
 		    return self.list_no
 
 class truck_header_report(models.Model):
+
     truck_control_no = models.CharField(verbose_name='Truck Control No.', max_length=20)
     truck_no = models.ForeignKey(truck, on_delete=models.CASCADE)
-    
     driver_name = models.ForeignKey(employee, on_delete=models.CASCADE)
     promised_date = models.DateField(verbose_name='Promised Date')
-    list_id = models.ForeignKey(truck_list_report, on_delete=models.CASCADE)
+    list_id = models.ManyToManyField(truck_list_report)
 
     def __str__(self):
 		    return self.truck_control_no
 
+class po_header_report(models.Model):
+    po_no = models.CharField(verbose_name='Purchase Order No.', max_length=20)
+    
+    def __str__(self):
+		    return self.po_no
 
+class supplier(models.Model):
+    sup_no = models.CharField(verbose_name='Supplier No.', max_length=20)
+    sup_name = models.CharField(verbose_name='Name', max_length=50)
+
+    def __str__(self):
+		    return self.sup_name
+
+class replacement_list_report(models.Model):
+    list_no = models.CharField(verbose_name='No.', max_length=5)
+    dn_no = models.ForeignKey(dn_header_report, verbose_name='Ref. DN No.' , on_delete=models.CASCADE)
+    po_no = models.ForeignKey(po_header_report, verbose_name='MST PO No.' , on_delete=models.CASCADE)
+    sup_no = models.ForeignKey(supplier, verbose_name='Supplier Code' , on_delete=models.CASCADE)
+    package_no = models.ForeignKey(master_package,verbose_name='Package Code', on_delete=models.CASCADE)
+    replacement = models.IntegerField(verbose_name='Replacement Qty.')
+    receive = models.IntegerField(verbose_name='Receive Qty.')
+    remark = models.TextField(verbose_name='Remark', null=True)
+    
+    def __str__(self):
+		    return self.list_no
+
+class replacement_header_report(models.Model):
+    replacement_no = models.CharField(max_length=20)
+    replacement_date = models.DateField(verbose_name='Replacement Date')
+    replacement_list = models.ManyToManyField(replacement_list_report)
+
+    def __str__(self):
+		    return self.replacement_no
 
 
 

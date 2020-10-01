@@ -1,0 +1,312 @@
+<html lang="en">
+    <head>        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Title</title>
+        <style>          
+            @page{
+            size:a4 portrait;
+                @frame header_frame {
+                    -pdf-frame-content:header_content;
+                    left:2.8cm;
+                    right:2.8cm;
+                    width:15.5cm;
+                    top:40pt;
+                    height:30%;
+                }
+                @frame image_header_frame {
+                    -pdf-frame-content:logo;
+                    left:2.8cm;
+                    width:5cm;
+                    top:4cm;
+                    height:30%;
+                }
+                @frame trucktext_header_frame {
+                    -pdf-frame-content:title;
+                    left:11cm;
+                    width:200pt;
+                    top:4.5cm;
+                }
+                @frame pagination_header_frame {
+                    -pdf-frame-content:pagination;
+                    left: 17cm;
+                    width:200pt;
+                    top:2cm;
+                }
+                
+                @frame detail_left_header_frame {
+                    -pdf-frame-content:header_detail_left;
+                    left: 2.8cm;
+                    width:10cm;
+                    top:7.5cm;
+                }
+               
+                @frame detail_right_header_frame {
+                    -pdf-frame-content:header_detail_right;
+                    left: 11cm;
+                    width:10cm;
+                    top:7.5cm;
+                }
+                @frame thead_table_header_frame {
+                    -pdf-frame-content:thead_table;
+                    left: 2.8cm;
+                    width:15.5cm;
+                    top:11.9cm;
+                }
+                
+                @frame footer_frame {
+                    -pdf-frame-content:footer_content;
+                    left:2.8cm;
+                    right:2.8cm;
+                    width:15.5cm;
+                    top:18.5cm;
+                    height:3cm;
+                }
+
+                @frame footer1_frame {
+                    -pdf-frame-content:footer1;
+                    left:2.8cm;
+                    width:3cm;
+                    top:24cm;
+                    height:3cm;
+                }
+
+                @frame footer2_frame {
+                    -pdf-frame-content:footer2;
+                    left:9cm;
+                    width:3cm;
+                    top:24cm;
+                    height:3cm;
+                }
+
+                @frame footer3_frame {
+                    -pdf-frame-content:footer3;
+                    left:15cm;
+                    width:3cm;
+                    top:24cm;
+                    height:3cm;
+                }
+                
+                @frame content_frame {
+                    left:2.8cm;
+                    right:2.8cm;
+                    width:15.5cm;
+                    top:13.4cm;
+                    height:280pt;
+                }
+            }
+            
+            thead {display:table-header-group;}
+            tbody {display:table-row-group;}
+            tfoot {display: table-footer-group;}
+            table{                
+                margin-top: 10%;
+                border-collapse: collapse;
+                border: 1px solid #ddd;
+                font-family: 'Prompt', sans-serif;
+                table-layout: fixed;
+                word-wrap: break-word;         /* All browsers since IE 5.5+ */
+                overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+            }
+            th, td {
+                text-align: center;
+                padding: 5px;
+                border: 1px solid #ddd;
+                font-family: 'Prompt', sans-serif;
+                font-size: 12px;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header_content">
+            <div id="pagination">
+                Page <pdf:pagenumber> / <pdf:pagecount>
+            </div>
+            <div id="logo">
+                <img  src="https://uppic.cc/d/yPYF" style="width: 200p;">
+            </div>            
+            <div id="title">
+                <h2 style="font-size: 30pt;">Truck Control</h2>
+            </div>
+            <div id="header_detail_left" style="font-size: 12px;">
+                <p>Truck No. (ทะเบียนรถ):</p>
+                <p>Truck Type (ประเภทรถ):</p>
+                <p>Deliver Name (ชื่อพนักงานขับรถ):</p>
+                <p>Telephone (เบอร์โทรศัพท์):</p>
+            </div>   
+            <div id="header_detail_right" style="font-size: 12px;">             
+                <p>Truck Control No. (เลขที่ใบคุมรถ):</p>
+                <p>Promised Date (วันที่ต้องการ):</p>                    
+            </div> 
+        </div>             
+        <div id="thead_table">
+            <table>
+                
+                    <tr>
+                        <th style="width: 10%;">No. (ลำดับที่)</th>
+                        <th style="width: 18%;">Destination (สถานที่จัดส่ง)</th>
+                        <th style="width: 20%;">Delivery Date (วันที่ส่งของ)</th>
+                        <th style="width: 25%;">Delivery Note No. (เลขที่ใบส่งของ)</th>
+                        <th>Remark<br>(หมายเหตุ)</th>
+                    </tr>
+                
+            </table>
+        </div>
+        <table>
+            
+                <tr>
+                    <td style="width: 10%;">1</td>
+                    <td style="width: 18%;">xxxxx</td>
+                    <td style="width: 20%;">yyyyy</td>
+                    <td style="width: 25%;">dfsfd</td>
+                    <td>dfsfd</td>
+                </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>xxxxx</td>
+                        <td>yyyyy</td>
+                        <td>dfsfd</td>
+                        <td>dfsfd</td>
+                    </tr>
+                    
+                    
+                    
+                
+                
+            </table>
+        
+    <div id="footer_content">
+            <div id="footer1" style="text-align: center;">
+                <p>Printed by (จัดทำโดย)</p>
+                <p>.........................................................................</p>
+                <p>Customer Service</p>
+                <p>(เจ้าหน้าที่ประสานงานลูกค้า)</p>    
+            </div>
+            <div id="footer2" style="text-align: center;">                    
+                <p>Checked by (ตรวจสอบโดย)</p>
+                <p>.........................................................................</p>
+                <p>Warehouse Supervsior</p>
+                <p>(หัวหน้างานคลังสินค้า)</p>                     
+            </div>
+            <div id="footer3" style="text-align: center;">                    
+                <p>Part Receiving by (รับสินค้าโดย)</p>
+                <p>.........................................................................</p>
+                <p>Truck Driver</p>
+                <p>(พนักงานขับรถ) </p>                     
+            </div>   
+        </div>
+    </body>
+</html>
